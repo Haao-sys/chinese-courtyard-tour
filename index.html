@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>江南竹韵 · 新中式庭院 720° 光追漫游</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- ================= TAB 1: 720° CYCLES RAY-TRACED VR PANORAMA TOUR ================= -->
+  <section id="tab-pano" class="tab-view active">
+    <canvas id="pano-canvas"></canvas>
+    <div id="pano-hotspots"></div>
+
+    <!-- Loading Overlay -->
+    <div id="pano-loader" class="pano-loader">
+      <div class="spinner"></div>
+      <span>正在加载 4K Cycles 光追全景...</span>
+    </div>
+
+    <!-- Top Floating Brand & Mood Toggle -->
+    <header class="top-bar">
+      <div class="title-pill">
+        <span class="dot"></span>
+        <div>
+          <h1>江南竹韵 · 720° 光追全景</h1>
+          <p id="spot-subtitle">入户主轴 · 360° 实景漫游</p>
+        </div>
+      </div>
+
+      <div class="mood-toggle" role="group" aria-label="日夜切换">
+        <button id="btn-mood-day" class="mood-btn active">☀️ 晴日</button>
+        <button id="btn-mood-night" class="mood-btn">🌌 夜景</button>
+      </div>
+    </header>
+
+    <!-- Right Quick Actions (Auto-Rotate & Phone Gyroscope) -->
+    <div class="side-actions">
+      <button id="btn-autorotate" class="fab active" title="自动环视">🔄<span>环视</span></button>
+      <button id="btn-gyro" class="fab" title="手机陀螺仪体感浏览">📱<span>体感</span></button>
+      <button id="btn-reset" class="fab" title="重置视角">🧭<span>正视</span></button>
+    </div>
+
+    <!-- Bottom Viewpoint Switcher -->
+    <div class="spot-switcher">
+      <button class="spot-chip active" data-spot="entry">🏠 入户主路</button>
+      <button class="spot-chip" data-spot="bridge">🌉 曲桥之上</button>
+      <button class="spot-chip" data-spot="pavilion">🍵 紫藤茶亭</button>
+    </div>
+
+    <div class="pano-hint" id="pano-hint">👆 单指拖动 360° 环视 · 双指缩放 · 点击场景内光点漫步</div>
+  </section>
+
+  <!-- ================= TAB 2: CYCLES GPU MP4 CINEMA ================= -->
+  <section id="tab-video" class="tab-view scrollable">
+    <div class="page-wrap">
+      <div class="section-head">
+        <span class="tag">RTX 4060 · Cycles OptiX 光追渲染</span>
+        <h2>3D 实景光追漫游大片</h2>
+        <p>真实光线折射活水、摇曳翠竹投影与昼夜灯光演绎</p>
+      </div>
+
+      <div class="video-card">
+        <div class="video-box">
+          <video id="main-video" controls playsinline webkit-playsinline preload="none" poster="./assets/stills/cycles_hero_day.png">
+            <source src="./assets/videos/cycles_courtyard_day.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="video-tabs">
+          <button class="vtab active" data-video="./assets/videos/cycles_courtyard_day.mp4" data-poster="./assets/stills/cycles_hero_day.png">
+            ☀️ 晴日午后版（24fps 光追）
+          </button>
+          <button class="vtab" data-video="./assets/videos/cycles_courtyard_twilight.mp4" data-poster="./assets/stills/cycles_hero_twilight.png">
+            🌌 暮色蓝调版（夜景灯光）
+          </button>
+        </div>
+      </div>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <h3>🌊 活水循环锦鲤池</h3>
+          <p>东侧大片泥地重构为下挖自然驳岸水池，太湖石三层叠水增氧，10 尾锦鲤与睡莲荷叶相映成趣。</p>
+        </div>
+        <div class="info-card">
+          <h3>🌉 胡桃木回纹拱桥</h3>
+          <p>传统中式回纹栏板与铜制莲花望柱，踏步暗藏暖光灯带，优雅衔接中央主轴与东南角茶亭。</p>
+        </div>
+        <div class="info-card">
+          <h3>🎋 粉墙黛瓦与翠竹</h3>
+          <p>素水泥东墙升级白墙小青瓦压顶 + 镂空海棠花窗与月洞门，成排翠竹在墙面投下诗意竹影。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TAB 3: CURTAIN COMPARISON & GALLERY ================= -->
+  <section id="tab-gallery" class="tab-view scrollable">
+    <div class="page-wrap">
+      <div class="section-head">
+        <span class="tag">滑动拉帘 · 昼夜光影对比</span>
+        <h2>高清写实效果图 & 空间方案</h2>
+        <p>左右拖动中间滑块，实时对比晴日与暮色灯光氛围</p>
+      </div>
+
+      <!-- Interactive Touch Curtain Compare 1: Photorealistic Concept Renders -->
+      <div class="compare-block">
+        <div class="compare-title">✨ 写实落地概念渲染（日景 ⇄ 蓝调夜景）</div>
+        <div class="curtain-box" data-curtain>
+          <img class="curtain-img" src="./assets/stills/concept_day.jpg" alt="晴日写实效果" draggable="false" />
+          <div class="curtain-overlay">
+            <img class="curtain-img" src="./assets/stills/concept_night.jpg" alt="蓝调夜景写实效果" draggable="false" />
+          </div>
+          <div class="curtain-handle"><span>⇄</span></div>
+          <span class="curtain-label left">☀️ 晴日</span>
+          <span class="curtain-label right">🏮 夜景</span>
+        </div>
+      </div>
+
+      <!-- Interactive Touch Curtain Compare 2: Cycles Ray-Traced 1080P Renders -->
+      <div class="compare-block">
+        <div class="compare-title">🎬 Blender Cycles 1080P 光追成图（日景 ⇄ 夜景）</div>
+        <div class="curtain-box" data-curtain>
+          <img class="curtain-img" src="./assets/stills/cycles_hero_day.png" alt="Cycles 晴日" draggable="false" />
+          <div class="curtain-overlay">
+            <img class="curtain-img" src="./assets/stills/cycles_hero_twilight.png" alt="Cycles 夜景" draggable="false" />
+          </div>
+          <div class="curtain-handle"><span>⇄</span></div>
+          <span class="curtain-label left">☀️ 晴日</span>
+          <span class="curtain-label right">🌌 蓝调</span>
+        </div>
+      </div>
+
+      <!-- Bridge Close-up Still -->
+      <div class="compare-block">
+        <div class="compare-title">🌉 曲桥流水与竹影花窗（Cycles 1080P 特写）</div>
+        <img class="full-still" src="./assets/stills/cycles_hero_bridge.png" alt="曲桥流水特写" />
+      </div>
+
+      <div class="tips-box">
+        <h3>📐 落地施工核心贴士</h3>
+        <ul>
+          <li><strong>活水不发绿</strong>：池深建议 0.8–1.0 米，假山后隐蔽配置过滤仓 + UV 杀菌灯，底排抽水至假山顶跌落循环。</li>
+          <li><strong>翠竹防串根</strong>：竹槽四周务必深埋 60cm 高密度 HDPE 阻根板，保护围墙与水池防水层。</li>
+          <li><strong>保留降本</strong>：完整沿用原中央宽阔石材主路、西侧原生大树及东南角葡萄架位与葡萄藤，性价比极高。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BOTTOM MOBILE NAVIGATION BAR ================= -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-tab="tab-pano">
+      <span class="nav-ico">🌐</span>
+      <span class="nav-txt">720°全景</span>
+    </button>
+    <button class="nav-item" data-tab="tab-video">
+      <span class="nav-ico">🎬</span>
+      <span class="nav-txt">光追视频</span>
+    </button>
+    <button class="nav-item" data-tab="tab-gallery">
+      <span class="nav-ico">🖼️</span>
+      <span class="nav-txt">效果对比</span>
+    </button>
+  </nav>
+
+  <script src="./app.js?v=4"></script>
+</body>
+</html>
